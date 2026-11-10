@@ -1,0 +1,207 @@
+'use client'
+
+import { useEffect, useState, type FormEvent } from 'react'
+import { booking, type ServiceId } from '@/lib/site-config'
+import { callHref } from '@/lib/contact'
+import { nb } from '@/lib/text'
+import { CheckIcon, PhoneIcon } from '@/components/ui/icons'
+import { SELECT_SERVICE_EVENT } from '@/components/ui/service-link'
+
+type Mode = 'co-so' | 'tai-nha'
+type Errors = Partial<Record<'name' | 'phone', string>>
+
+const PHONE_RE = /^(0|\+?84)(3|5|7|8|9)\d{8}$/
+
+const fieldClass =
+  'w-full rounded-xl border border-wood-soft bg-paper px-4 text-[16.5px] text-ink placeholder:text-ink-soft/60 transition-colors focus:border-forest focus:outline-none focus:ring-3 focus:ring-gold/25'
+const labelClass = 'mb-2 block text-[15.5px] font-semibold text-forest-deep'
+
+export function BookingForm() {
+  const [service, setService] = useState<ServiceId>('tq90')
+  const [mode, setMode] = useState<Mode>('co-so')
+  const [errors, setErrors] = useState<Errors>({})
+  const [sent, setSent] = useState(false)
+
+  useEffect(() => {
+    const onSelect = (e: Event) => {
+      const id = (e as CustomEvent<ServiceId>).detail
+      setService(id)
+      setSent(false)
+      if (id === 'tai-nha') setMode('tai-nha')
+    }
+    window.addEventListener(SELECT_SERVICE_EVENT, onSelect)
+    return () => window.removeEventListener(SELECT_SERVICE_EVENT, onSelect)
+  }, [])
+
+  function onSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    const data = new FormData(e.currentTarget)
+    const name = String(data.get('name') ?? '').trim()
+    const phone = String(data.get('phone') ?? '').replace(/[\s.-]/g, '')
+    const next: Errors = {}
+    if (name.length < 2) next.name = 'Vui lòng nhập họ và tên.'
+    if (!phone) next.phone = 'Vui lòng nhập số điện thoại.'
+    else if (!PHONE_RE.test(phone)) next.phone = 'Số điện thoại chưa đúng định dạng (VD: 0912 345 678).'
+    setErrors(next)
+    if (Object.keys(next).length) {
+      e.currentTarget.querySelector<HTMLElement>(`[name="${Object.keys(next)[0]}"]`)?.focus()
+      return
+    }
+    // TODO(DEV): chưa có backend – gửi dữ liệu khi được duyệt kênh nhận (Zalo / email / Google Sheet).
+    setSent(true)
+    e.currentTarget.reset()
+  }
+
+  if (sent) {
+    return (
+      <div role="status" className="flex h-full flex-col items-center justify-center rounded-[22px] border border-gold/60 bg-paper p-8 text-center lg:p-12">
+        <span className="inline-flex size-16 items-center justify-center rounded-full bg-forest text-gold-light">
+          <CheckIcon size={30} />
+        </span>
+        <p className="mt-5 font-serif text-[24px] font-semibold text-forest-deep">Đặt lịch thành công</p>
+        <p className="text-body mt-3 max-w-[420px] text-ink-soft">{nb(booking.success)}</p>
+        <div className="mt-7 flex flex-wrap justify-center gap-3">
+          <a href={callHref} className="btn bg-forest text-cream hover:bg-forest-deep">
+            <PhoneIcon size={19} />
+            Gọi ngay
+          </a>
+          <button type="button" onClick={() => setSent(false)} className="btn border border-forest text-forest hover:bg-forest hover:text-cream">
+            Đặt lịch khác
+          </button>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <form
+      noValidate
+      onSubmit={onSubmit}
+      className="rounded-[22px] border border-wood/35 bg-paper p-6 shadow-[0_24px_60px_-40px_rgb(107_74_47/0.8)] sm:p-8 lg:p-9"
+      aria-label="Form đặt lịch hẹn"
+    >
+      <div className="grid gap-[18px] sm:grid-cols-2">
+        <div>
+          <label htmlFor="bk-name" className={labelClass}>
+            Họ và tên <span className="text-gold-dark">*</span>
+          </label>
+          <input
+            id="bk-name"
+            name="name"
+            autoComplete="name"
+            placeholder="Nguyễn Văn A"
+            aria-invalid={!!errors.name}
+            aria-describedby={errors.name ? 'bk-name-err' : undefined}
+            className={`${fieldClass} h-13 ${errors.name ? 'border-danger' : ''}`}
+          />
+          {errors.name && (
+            <p id="bk-name-err" className="mt-1.5 text-[14px] text-danger">
+              {errors.name}
+            </p>
+          )}
+        </div>
+        <div>
+          <label htmlFor="bk-phone" className={labelClass}>
+            Số điện thoại <span className="text-gold-dark">*</span>
+          </label>
+          <input
+            id="bk-phone"
+            name="phone"
+            type="tel"
+            inputMode="tel"
+            autoComplete="tel"
+            placeholder="0912 345 678"
+            aria-invalid={!!errors.phone}
+            aria-describedby={errors.phone ? 'bk-phone-err' : undefined}
+            className={`${fieldClass} h-13 ${errors.phone ? 'border-danger' : ''}`}
+          />
+          {errors.phone && (
+            <p id="bk-phone-err" className="mt-1.5 text-[14px] text-danger">
+              {errors.phone}
+            </p>
+          )}
+        </div>
+
+        <div className="sm:col-span-2">
+          <label htmlFor="bk-service" className={labelClass}>
+            Chọn dịch vụ
+          </label>
+          <div className="relative">
+            <select
+              id="bk-service"
+              name="service"
+              value={service}
+              onChange={(e) => {
+                const id = e.target.value as ServiceId
+                setService(id)
+                if (id === 'tai-nha') setMode('tai-nha')
+              }}
+              className={`${fieldClass} h-13 appearance-none pr-11`}
+            >
+              {booking.serviceOptions.map((o) => (
+                <option key={o.id} value={o.id}>
+                  {o.label}
+                </option>
+              ))}
+            </select>
+            <svg aria-hidden viewBox="0 0 24 24" className="pointer-events-none absolute top-1/2 right-4 size-5 -translate-y-1/2 text-forest" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="m6 9 6 6 6-6" />
+            </svg>
+          </div>
+        </div>
+
+        <fieldset className="sm:col-span-2">
+          <legend className={labelClass}>Hình thức phục vụ</legend>
+          <div className="grid grid-cols-2 gap-3">
+            {(
+              [
+                { v: 'co-so', label: 'Tại cơ sở' },
+                { v: 'tai-nha', label: 'Tại nhà' },
+              ] as const
+            ).map((o) => (
+              <label
+                key={o.v}
+                className={`flex h-13 cursor-pointer items-center justify-center gap-2.5 rounded-xl border text-[16.5px] font-medium transition-colors has-focus-visible:ring-3 has-focus-visible:ring-gold/40 ${
+                  mode === o.v ? 'border-forest bg-forest text-cream' : 'border-wood-soft bg-paper text-ink hover:border-forest'
+                }`}
+              >
+                <input type="radio" name="mode" value={o.v} checked={mode === o.v} onChange={() => setMode(o.v)} className="sr-only" />
+                <span
+                  aria-hidden
+                  className={`flex size-4.5 items-center justify-center rounded-full border-2 ${mode === o.v ? 'border-gold-light' : 'border-wood-soft'}`}
+                >
+                  {mode === o.v && <span className="size-2 rounded-full bg-gold-light" />}
+                </span>
+                {o.label}
+              </label>
+            ))}
+          </div>
+        </fieldset>
+
+        <div className="sm:col-span-2">
+          <label htmlFor="bk-time" className={labelClass}>
+            Thời gian mong muốn
+          </label>
+          <input id="bk-time" name="time" type="datetime-local" className={`${fieldClass} h-13`} />
+        </div>
+
+        <div className="sm:col-span-2">
+          <label htmlFor="bk-note" className={labelClass}>
+            Ghi chú thêm
+          </label>
+          <textarea
+            id="bk-note"
+            name="note"
+            rows={3}
+            placeholder={mode === 'tai-nha' ? 'Địa chỉ nhà, vùng đang đau mỏi…' : 'Vùng đang đau mỏi, yêu cầu về lực tay…'}
+            className={`${fieldClass} resize-y py-3 leading-[1.55]`}
+          />
+        </div>
+      </div>
+
+      <button type="submit" className="btn mt-7 w-full bg-forest text-cream hover:bg-forest-deep">
+        {booking.submit}
+      </button>
+    </form>
+  )
+}
