@@ -126,3 +126,48 @@ export const MessengerIcon = ({ size = 24, ...props }: IconProps) => (
     <path d="M12 2C6.4 2 2 6.1 2 11.6c0 2.9 1.2 5.4 3.1 7.1v3.3l3-1.7c1.2.3 2.5.5 3.9.5 5.6 0 10-4.1 10-9.6S17.6 2 12 2zm1 12.9-2.5-2.7-5 2.7L11 9.1l2.6 2.7 4.9-2.7-5.5 5.8z" />
   </svg>
 )
+
+/** Bàn tay ấn huyệt + 3 huyệt đạo (dịch vụ tẩm quất – bấm huyệt) */
+export const AcupressureIcon = (p: IconProps) => (
+  <svg {...base(p)}>
+    <path d="M9 12V5.5a1.5 1.5 0 0 1 3 0V11M12 10.5V4.5a1.5 1.5 0 0 1 3 0V11M15 10.5V6a1.5 1.5 0 0 1 3 0v7a7 7 0 0 1-7 7h-.6a6 6 0 0 1-4.6-2.1L3.4 15a1.5 1.5 0 0 1 2.2-2L9 15.5" />
+    <circle cx="20.5" cy="2.8" r=".9" fill="currentColor" stroke="none" />
+    <circle cx="21.6" cy="6" r=".9" fill="currentColor" stroke="none" />
+    <circle cx="21.2" cy="9.2" r=".9" fill="currentColor" stroke="none" />
+  </svg>
+)
+
+/** Ống giác hơi (dịch vụ cạo gió – giác hơi) */
+export const CuppingIcon = (p: IconProps) => (
+  <svg {...base(p)}>
+    <path d="M6 20h12" />
+    <path d="M7.5 20v-6.5a4.5 4.5 0 0 1 9 0V20" />
+    <path d="M10 11.5a2.3 2.3 0 0 1 2-1" />
+    <path d="M12 3c1.2 1.4 1.2 2.6 0 4M15.5 4c.9 1 .9 2 0 3M8.5 4c-.9 1-.9 2 0 3" />
+  </svg>
+)
+
+/** Ngôi nhà (dịch vụ tại nhà) */
+export const HomeIcon = (p: IconProps) => (
+  <svg {...base(p)}>
+    <path d="M3 10.5 12 3l9 7.5" />
+    <path d="M5 9v11h14V9" />
+    <path d="M12 18c-2.2-1.5-3.5-2.8-3.5-4.3a1.9 1.9 0 0 1 3.5-1 1.9 1.9 0 0 1 3.5 1c0 1.5-1.3 2.8-3.5 4.3Z" />
+  </svg>
+)
+
+/** Mũi tên xoay – gợi ý lật thẻ */
+export const RotateIcon = (p: IconProps) => (
+  <svg {...base(p)}>
+    <path d="M21 12a9 9 0 1 1-2.6-6.4" />
+    <path d="M21 4v5h-5" />
+  </svg>
+)
+
+/** Người dùng chung chung (avatar mặc định – không dùng ảnh người thật cho nội dung mẫu) */
+export const UserIcon = (p: IconProps) => (
+  <svg {...base(p)}>
+    <circle cx="12" cy="8" r="4" />
+    <path d="M4 21a8 8 0 0 1 16 0" />
+  </svg>
+)

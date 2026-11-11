@@ -19,12 +19,12 @@ const beVietnam = Be_Vietnam_Pro({
 })
 
 export const metadata: Metadata = {
-  title: 'Tẩm Quất Thật – Tẩm quất người khiếm thị tại Hà Nội',
+  title: 'Tẩm Quất Thật – 711 Hồng Hà | Tẩm quất người khiếm thị Hoàn Kiếm',
   description:
-    'Tẩm quất – bấm huyệt Đông y, cạo gió – giác hơi và tẩm quất tại nhà bởi đội ngũ kỹ thuật viên khiếm thị tận tâm tại Hà Nội. Gọi ngay để đặt lịch.',
+    'Tẩm quất – bấm huyệt Đông y từ 150.000đ, cạo gió – giác hơi, tẩm quất tại nhà bởi kỹ thuật viên khiếm thị tại 711 Hồng Hà, Hoàn Kiếm. Hotline 0989.588.030.',
   openGraph: {
-    title: 'Tẩm Quất Thật – Tẩm quất người khiếm thị',
-    description: 'Lắng nghe cơ thể bằng đôi tay tận tâm. Bấm huyệt Đông y tại cơ sở hoặc tại nhà ở Hà Nội.',
+    title: 'Tẩm Quất Thật – 711 Hồng Hà',
+    description: 'Chạm đúng điểm đau – Cảm nhận sự chữa lành. 15 năm chắc tay nghề – Trọn vẹn tâm y.',
     locale: 'vi_VN',
     type: 'website',
     images: [{ url: '/images/brand/logo-full.png', width: 640, height: 600, alt: 'Logo Tẩm Quất Thật' }],

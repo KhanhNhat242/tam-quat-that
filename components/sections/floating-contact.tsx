@@ -1,4 +1,4 @@
-import { features } from '@/lib/site-config'
+import { business, features } from '@/lib/site-config'
 import { callHref } from '@/lib/contact'
 import { MessengerIcon, PhoneIcon, ZaloIcon } from '@/components/ui/icons'
 
@@ -33,8 +33,8 @@ export function FloatingContact() {
       )}
       <a
         href={callHref}
-        aria-label="Gọi điện ngay"
-        className="breathe inline-flex size-15 items-center justify-center rounded-full border-2 border-gold-light bg-forest text-gold-light shadow-[0_14px_30px_-10px_rgb(31_51_40/0.8)] transition-transform hover:-translate-y-0.5 lg:size-16"
+        aria-label={`Gọi hotline ${business.phone} (${business.contactName})`}
+        className="breathe inline-flex size-15 items-center justify-center rounded-full border-2 border-gold-light bg-forest text-white shadow-[0_14px_30px_-10px_rgb(31_51_40/0.8)] transition-transform hover:-translate-y-0.5 lg:size-16"
       >
         <PhoneIcon size={26} />
       </a>

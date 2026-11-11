@@ -1,4 +1,5 @@
 import { business } from '@/lib/site-config'
+import { plain } from '@/lib/text'
 import { RevealObserver } from '@/components/ui/reveal-observer'
 import { Header } from '@/components/sections/header'
 import { Hero } from '@/components/sections/hero'
@@ -17,14 +18,19 @@ const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'HealthAndBeautyBusiness',
   name: business.fullName,
-  description: 'Tẩm quất – bấm huyệt Đông y, cạo gió – giác hơi, tẩm quất tại nhà tại Hà Nội.',
+  slogan: plain(business.slogan),
+  description: 'Tẩm quất – bấm huyệt Đông y, cạo gió – giác hơi, tẩm quất tại nhà bởi kỹ thuật viên khiếm thị tại 711 Hồng Hà, Hoàn Kiếm, Hà Nội.',
   areaServed: business.city,
+  priceRange: business.priceRange,
   geo: { '@type': 'GeoCoordinates', latitude: business.geo.lat, longitude: business.geo.lng },
   hasMap: business.mapsUrl,
-  ...(business.phone ? { telephone: business.phone } : {}),
-  ...(business.address
-    ? { address: { '@type': 'PostalAddress', streetAddress: business.address, addressLocality: business.city, addressCountry: 'VN' } }
-    : {}),
+  ...(business.phone ? { telephone: business.phone.replace(/\./g, ' ') } : {}),
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: business.street,
+    addressLocality: `${business.district}, ${business.city}`,
+    addressCountry: 'VN',
+  },
 }
 
 export default function Home() {
@@ -32,16 +38,16 @@ export default function Home() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <a
-        href="#gioi-thieu"
-        className="sr-only z-[80] rounded-full bg-forest px-5 py-3 text-cream focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
+        href="#noi-dung"
+        className="sr-only z-[80] rounded-full bg-forest px-5 py-3 text-[17px] font-semibold text-white focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
       >
         Bỏ qua tới nội dung
       </a>
       <Header />
-      <main className="flex-1">
+      <main id="noi-dung" tabIndex={-1} className="flex-1">
         <Hero />
         <About />
-        <Usp />
+        {/* <Usp /> */}
         <Services />
         <Pricing />
         <Gallery />

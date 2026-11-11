@@ -4,23 +4,21 @@ import Image from 'next/image'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { gallery, images } from '@/lib/site-config'
 import { nb } from '@/lib/text'
-import { revealDelay } from '@/lib/style'
 import { ChevronLeftIcon, ChevronRightIcon, CloseIcon, ExpandIcon } from '@/components/ui/icons'
 import { SectionHeading } from '@/components/ui/section-heading'
 
-/* Bố cục bento: desktop lưới 4 cột × 3 hàng, mobile 2 cột */
+/* Bố cục bento 4 ô: desktop lưới 4 cột × 2 hàng, mobile 2 cột */
 const tileClass = [
   'col-span-2 row-span-2', // mặt tiền – ô lớn
-  'col-span-2', // đá nóng – ô ngang
-  '', // bàn chân
-  '', // giác hơi
-  'lg:col-span-2', // thảo dược
-  'lg:col-span-2', // bắp chân
+  'col-span-2', // giác hơi – ô ngang
+  '', // biển hiệu buổi tối
+  '', // đá nóng & thảo mộc
 ]
 
 export function Gallery() {
   const [index, setIndex] = useState<number | null>(null)
   const closeRef = useRef<HTMLButtonElement>(null)
+  const dialogRef = useRef<HTMLDivElement>(null)
   const lastTrigger = useRef<HTMLButtonElement | null>(null)
   const total = gallery.items.length
 
@@ -40,6 +38,19 @@ export function Gallery() {
       if (e.key === 'Escape') close()
       if (e.key === 'ArrowRight') go(1)
       if (e.key === 'ArrowLeft') go(-1)
+      // Giữ tiêu điểm trong hộp thoại (a11y)
+      if (e.key === 'Tab' && dialogRef.current) {
+        const focusables = Array.from(dialogRef.current.querySelectorAll<HTMLElement>('button'))
+        const first = focusables[0]
+        const last = focusables[focusables.length - 1]
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault()
+          last.focus()
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault()
+          first.focus()
+        }
+      }
     }
     window.addEventListener('keydown', onKey)
     return () => {
@@ -54,20 +65,20 @@ export function Gallery() {
   return (
     <section id="thu-vien" aria-labelledby="gallery-title" className="section-y bg-cream lg:py-24">
       <div className="container-page">
-        <SectionHeading id="gallery-title" eyebrow={gallery.eyebrow} title={gallery.title} description={gallery.description} />
+        <SectionHeading id="gallery-title" title={gallery.title} description={gallery.description} layout="split" />
 
-        <ul className="grid auto-rows-[150px] grid-cols-2 gap-3 sm:auto-rows-[210px] lg:auto-rows-[230px] lg:grid-cols-4 lg:gap-5">
+        <ul className="grid auto-rows-[170px] grid-cols-2 gap-3 sm:auto-rows-[220px] lg:auto-rows-[250px] lg:grid-cols-4 lg:gap-5">
           {gallery.items.map((item, i) => {
             const img = images[item.image]
             return (
-              <li key={item.image + i} className={tileClass[i]} data-reveal="up" style={revealDelay((i % 4) * 100)}>
+              <li key={item.image + i} className={tileClass[i]}>
                 <button
                   type="button"
                   onClick={(e) => {
                     lastTrigger.current = e.currentTarget
                     setIndex(i)
                   }}
-                  className="group relative block h-full w-full overflow-hidden rounded-[18px] focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-gold"
+                  className="group relative block h-full w-full overflow-hidden rounded-[var(--radius-card)] bg-sand"
                   aria-label={`Xem ảnh lớn: ${item.caption}`}
                 >
                   <Image
@@ -75,16 +86,16 @@ export function Gallery() {
                     alt={img.alt}
                     fill
                     sizes={i === 0 ? '(min-width: 1024px) 600px, 100vw' : '(min-width: 1024px) 300px, 50vw'}
-                    className="object-cover transition-transform duration-[1.2s] ease-(--ease-soft) group-hover:scale-[1.06]"
+                    className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
                     style={{ objectPosition: img.position }}
                   />
                   <span
                     aria-hidden
-                    className="absolute inset-0 bg-gradient-to-t from-forest-deep/80 via-forest-deep/0 to-transparent opacity-80 transition-opacity duration-500 group-hover:opacity-100"
+                    className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-forest-deep/90 via-forest-deep/40 to-transparent"
                   />
                   <span className="absolute inset-x-3 bottom-3 flex items-end justify-between gap-2 text-left lg:inset-x-5 lg:bottom-4">
-                    <span className="font-serif text-[15px] leading-snug text-cream sm:text-[17px] lg:text-[18px]">{nb(item.caption)}</span>
-                    <span className="hidden size-9 shrink-0 items-center justify-center rounded-full border border-gold-light/60 text-gold-light opacity-0 transition-opacity duration-500 group-hover:opacity-100 sm:inline-flex">
+                    <span className="font-serif text-[16px] leading-snug text-white sm:text-[18px]">{nb(item.caption)}</span>
+                    <span className="hidden size-9 shrink-0 items-center justify-center rounded-full border border-gold-light text-gold-light sm:inline-flex">
                       <ExpandIcon size={16} />
                     </span>
                   </span>
@@ -98,14 +109,15 @@ export function Gallery() {
       {/* Lightbox */}
       {current && currentImg && (
         <div
+          ref={dialogRef}
           role="dialog"
           aria-modal="true"
           aria-label={current.caption}
-          className="fixed inset-0 z-[70] flex flex-col bg-forest-deep/95 backdrop-blur-sm"
+          className="on-dark fixed inset-0 z-[70] flex flex-col bg-forest-deep"
           onClick={close}
         >
           <div className="flex items-center justify-between px-4 py-3 text-cream sm:px-6">
-            <span className="text-[15px] text-cream/70 tabular-nums">
+            <span className="text-[16px] text-cream-muted tabular-nums" aria-live="polite">
               {index! + 1} / {total}
             </span>
             <button
@@ -113,7 +125,7 @@ export function Gallery() {
               type="button"
               aria-label="Đóng"
               onClick={close}
-              className="inline-flex size-12 items-center justify-center rounded-full border border-cream/30 hover:border-gold-light"
+              className="inline-flex size-12 items-center justify-center rounded-full border-2 border-cream-muted hover:border-gold-light"
             >
               <CloseIcon size={22} />
             </button>
@@ -129,7 +141,7 @@ export function Gallery() {
               type="button"
               aria-label="Ảnh trước"
               onClick={() => go(-1)}
-              className="absolute left-2 inline-flex size-12 items-center justify-center rounded-full bg-cream/10 text-cream hover:bg-gold-light hover:text-forest-deep sm:left-6"
+              className="absolute left-2 inline-flex size-12 items-center justify-center rounded-full border-2 border-cream-muted bg-forest-deep text-cream hover:bg-gold-light hover:text-ink sm:left-6"
             >
               <ChevronLeftIcon size={24} />
             </button>
@@ -137,7 +149,7 @@ export function Gallery() {
               type="button"
               aria-label="Ảnh sau"
               onClick={() => go(1)}
-              className="absolute right-2 inline-flex size-12 items-center justify-center rounded-full bg-cream/10 text-cream hover:bg-gold-light hover:text-forest-deep sm:right-6"
+              className="absolute right-2 inline-flex size-12 items-center justify-center rounded-full border-2 border-cream-muted bg-forest-deep text-cream hover:bg-gold-light hover:text-ink sm:right-6"
             >
               <ChevronRightIcon size={24} />
             </button>

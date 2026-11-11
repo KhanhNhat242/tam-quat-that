@@ -1,51 +1,83 @@
 import Image from 'next/image'
-import { about, images, logo } from '@/lib/site-config'
+import { Fragment, type CSSProperties } from 'react'
+import { about, business, images } from '@/lib/site-config'
+import { callHref } from '@/lib/contact'
 import { nb } from '@/lib/text'
-import { revealDelay } from '@/lib/style'
-import { SectionHeading } from '@/components/ui/section-heading'
+import { ArrowRightIcon, PhoneIcon } from '@/components/ui/icons'
 
+/** Cụm từ không ngắt giữa chừng → tiêu đề không bao giờ rớt 1 chữ */
+function Chunks({ parts }: { parts: readonly string[] }) {
+  return parts.map((c, i) => (
+    <Fragment key={c}>
+      {i > 0 && ' '}
+      <span className="whitespace-nowrap">{c}</span>
+    </Fragment>
+  ))
+}
+
+/**
+ * Giới thiệu – bố cục theo ảnh mẫu (đảo bên theo yêu cầu):
+ * ảnh lớn tràn mép trái, hoà dần sang nền kem bằng gradient; nội dung bên phải:
+ * nhãn → tiêu đề 2 độ đậm → đoạn văn → dòng thông tin → nút → hộp hotline bo tròn.
+ * Mobile: ảnh phía trên, gradient hoà xuống nội dung bên dưới.
+ */
 export function About() {
+  const img = images[about.image]
+
   return (
-    <section id="gioi-thieu" aria-labelledby="about-title" className="section-y relative overflow-hidden bg-cream lg:py-26">
-      {/* hoạ tiết lá chìm */}
-      <div aria-hidden className="pointer-events-none absolute -right-28 top-10 hidden w-[360px] opacity-[0.05] lg:block">
-        <Image src={logo.icon.src} width={logo.icon.width} height={logo.icon.height} alt="" />
+    <section id="gioi-thieu" aria-labelledby="about-title" className="pull-under-curve relative isolate overflow-hidden bg-cream">
+      {/* ---- Ảnh: trái (desktop) / trên (mobile) ---- */}
+      <div className="relative h-[340px] sm:h-[420px] lg:absolute lg:inset-y-0 lg:left-0 lg:h-auto lg:w-[54%]" data-reveal="left">
+        <Image
+          src={img.src}
+          alt={img.alt}
+          fill
+          sizes="(min-width: 1024px) 54vw, 100vw"
+          className="object-cover [object-position:var(--pos)] lg:[object-position:var(--pos-lg)]"
+          style={{ '--pos': about.imagePosition.mobile, '--pos-lg': about.imagePosition.desktop } as CSSProperties}
+        />
+        {/* Gradient chuyển tiếp ảnh → nền kem: sang phải (desktop), xuống dưới (mobile) */}
+        <div aria-hidden className="absolute inset-0 bg-gradient-to-b from-transparent from-55% to-cream lg:hidden" />
+        <div
+          aria-hidden
+          className="absolute inset-y-0 right-0 hidden w-[62%] bg-gradient-to-r from-transparent via-cream/80 via-55% to-cream to-90% lg:block"
+        />
+        {/* Mép trên/dưới dịu nhẹ để ảnh không cắt gắt vào section kề bên */}
+        <div aria-hidden className="absolute inset-x-0 bottom-0 hidden h-16 bg-gradient-to-t from-cream/60 to-transparent lg:block" />
       </div>
 
-      <div className="container-page grid items-center gap-8 lg:grid-cols-[0.92fr_1.08fr] lg:gap-14">
-        {/* Ảnh mặt tiền */}
-        <div className="relative mx-auto w-full max-w-[460px] pb-6 pl-6 lg:mx-0" data-reveal="left">
-          <div aria-hidden className="arch absolute top-6 right-6 bottom-0 left-0 border border-gold/70" />
-          <div className="arch relative aspect-[4/5] overflow-hidden shadow-[0_30px_60px_-30px_rgb(31_51_40/0.55)]">
-            <Image
-              src={images.storefront.src}
-              alt={images.storefront.alt}
-              fill
-              sizes="(min-width: 1024px) 460px, 90vw"
-              className="reveal-zoom object-cover"
-              style={{ objectPosition: images.storefront.position }}
-            />
-          </div>
-          <p className="absolute right-0 bottom-0 max-w-[230px] rounded-2xl bg-forest px-5 py-3.5 text-[15px] leading-snug text-cream shadow-xl sm:-right-4">
-            <span aria-hidden className="mb-1.5 block h-0.5 w-8 bg-gold-light" />
-            {nb(about.imageTag)}
-          </p>
-        </div>
+      {/* ---- Nội dung: phải ---- */}
+      <div className="container-page relative">
+        <div className="-mt-10 pb-17 lg:mt-0 lg:ml-auto lg:w-[48%] lg:pt-[calc(7rem+var(--curve-h))] lg:pb-28 xl:w-[46%]" data-reveal="up">
+          <h2 id="about-title" className="mt-4 font-serif text-[36px] leading-[1.1] sm:text-[44px] lg:text-[48px] xl:text-[54px]">
+            <span className="block font-normal text-forest">
+              <Chunks parts={about.titleLead} />
+            </span>
+            <span className="block font-semibold text-forest-deep">
+              <Chunks parts={about.titleAccent} />
+            </span>
+          </h2>
 
-        {/* Câu chuyện */}
-        <div>
-          <SectionHeading id="about-title" eyebrow={about.eyebrow} title={about.title} align="left" className="!mb-6 lg:!mb-8" />
-          <div className="max-w-[620px] space-y-4">
-            {about.paragraphs.map((p, i) => (
-              <p key={i} className="text-body text-ink-soft" data-reveal="up" style={revealDelay(120 + i * 120)}>
-                {nb(p)}
-              </p>
-            ))}
+          <div className="mt-6 max-w-[560px] space-y-4">
+            <p className="text-body text-ink">{nb(about.paragraphs)}</p>
           </div>
-          <div className="mt-8 flex items-center gap-4 border-t border-wood/15 pt-6" data-reveal="up" style={revealDelay(360)}>
-            <Image src={logo.icon.src} width={logo.icon.width} height={logo.icon.height} alt="" className="h-12 w-auto" />
-            <p className="font-serif text-[18px] text-forest-deep italic lg:text-[20px]">{nb(about.signature)}</p>
-          </div>
+
+          {/* Dòng thông tin (kiểu "tác giả / ngày") */}
+          <p className="mt-6 text-[16px] font-semibold tracking-[0.08em] text-wood-deep uppercase">
+            {about.meta[0]}{' '}
+            <span className="inline-block font-medium tracking-normal whitespace-nowrap normal-case">
+              <span aria-hidden className="mr-2 font-normal text-gold-dark">/</span>
+              {nb(about.meta[1])}
+            </span>
+          </p>
+
+          <a
+            href="#dat-lich"
+            className="btn group mt-7 min-h-12 bg-forest px-7 text-white hover:bg-forest-deep"
+          >
+            {about.cta}
+            <ArrowRightIcon size={18} className="transition-transform duration-200 group-hover:translate-x-1" />
+          </a>
         </div>
       </div>
     </section>

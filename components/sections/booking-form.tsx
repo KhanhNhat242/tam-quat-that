@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState, type FormEvent } from 'react'
-import { booking, type ServiceId } from '@/lib/site-config'
+import { booking, business, type ServiceId } from '@/lib/site-config'
 import { callHref } from '@/lib/contact'
 import { nb } from '@/lib/text'
 import { CheckIcon, PhoneIcon } from '@/components/ui/icons'
@@ -12,9 +12,10 @@ type Errors = Partial<Record<'name' | 'phone', string>>
 
 const PHONE_RE = /^(0|\+?84)(3|5|7|8|9)\d{8}$/
 
+/* Ô nhập cao 48px, viền ≥ 3:1 (wood), focus dùng viền 3px toàn cục trong globals.css */
 const fieldClass =
-  'w-full rounded-xl border border-wood-soft bg-paper px-4 text-[16.5px] text-ink placeholder:text-ink-soft/60 transition-colors focus:border-forest focus:outline-none focus:ring-3 focus:ring-gold/25'
-const labelClass = 'mb-2 block text-[15.5px] font-semibold text-forest-deep'
+  'w-full rounded-[10px] border-2 border-wood bg-paper px-4 text-[17px] text-ink placeholder:text-ink-soft transition-colors duration-200 focus:border-forest-deep'
+const labelClass = 'mb-2 block text-[17px] font-semibold text-forest-deep'
 
 export function BookingForm() {
   const [service, setService] = useState<ServiceId>('tq90')
@@ -54,18 +55,18 @@ export function BookingForm() {
 
   if (sent) {
     return (
-      <div role="status" className="flex h-full flex-col items-center justify-center rounded-[22px] border border-gold/60 bg-paper p-8 text-center lg:p-12">
-        <span className="inline-flex size-16 items-center justify-center rounded-full bg-forest text-gold-light">
+      <div role="status" className="flex h-full flex-col items-center justify-center rounded-[var(--radius-card)] border-2 border-forest bg-paper p-8 text-center lg:p-12">
+        <span aria-hidden className="inline-flex size-16 items-center justify-center rounded-full bg-forest text-white">
           <CheckIcon size={30} />
         </span>
-        <p className="mt-5 font-serif text-[24px] font-semibold text-forest-deep">Đặt lịch thành công</p>
+        <p className="mt-5 font-serif text-[24px] font-semibold text-forest-deep">{booking.successTitle}</p>
         <p className="text-body mt-3 max-w-[420px] text-ink-soft">{nb(booking.success)}</p>
         <div className="mt-7 flex flex-wrap justify-center gap-3">
-          <a href={callHref} className="btn bg-forest text-cream hover:bg-forest-deep">
+          <a href={callHref} className="btn bg-forest text-white hover:bg-forest-deep">
             <PhoneIcon size={19} />
-            Gọi ngay
+            Gọi {business.phone}
           </a>
-          <button type="button" onClick={() => setSent(false)} className="btn border border-forest text-forest hover:bg-forest hover:text-cream">
+          <button type="button" onClick={() => setSent(false)} className="btn border-2 border-forest text-forest hover:bg-forest hover:text-white">
             Đặt lịch khác
           </button>
         </div>
@@ -77,13 +78,13 @@ export function BookingForm() {
     <form
       noValidate
       onSubmit={onSubmit}
-      className="rounded-[22px] border border-wood/35 bg-paper p-6 shadow-[0_24px_60px_-40px_rgb(107_74_47/0.8)] sm:p-8 lg:p-9"
+      className="rounded-[var(--radius-card)] border border-wood-soft bg-paper p-6 shadow-[0_18px_40px_-34px_rgb(107_74_47/0.7)] sm:p-8 lg:p-9"
       aria-label="Form đặt lịch hẹn"
     >
       <div className="grid gap-[18px] sm:grid-cols-2">
         <div>
           <label htmlFor="bk-name" className={labelClass}>
-            Họ và tên <span className="text-gold-dark">*</span>
+            Họ và tên <span aria-hidden className="text-danger">*</span><span className="sr-only">(bắt buộc)</span>
           </label>
           <input
             id="bk-name"
@@ -92,17 +93,17 @@ export function BookingForm() {
             placeholder="Nguyễn Văn A"
             aria-invalid={!!errors.name}
             aria-describedby={errors.name ? 'bk-name-err' : undefined}
-            className={`${fieldClass} h-13 ${errors.name ? 'border-danger' : ''}`}
+            className={`${fieldClass} h-12 ${errors.name ? 'border-danger' : ''}`}
           />
           {errors.name && (
-            <p id="bk-name-err" className="mt-1.5 text-[14px] text-danger">
+            <p id="bk-name-err" role="alert" className="mt-1.5 text-[16px] font-medium text-danger">
               {errors.name}
             </p>
           )}
         </div>
         <div>
           <label htmlFor="bk-phone" className={labelClass}>
-            Số điện thoại <span className="text-gold-dark">*</span>
+            Số điện thoại <span aria-hidden className="text-danger">*</span><span className="sr-only">(bắt buộc)</span>
           </label>
           <input
             id="bk-phone"
@@ -113,10 +114,10 @@ export function BookingForm() {
             placeholder="0912 345 678"
             aria-invalid={!!errors.phone}
             aria-describedby={errors.phone ? 'bk-phone-err' : undefined}
-            className={`${fieldClass} h-13 ${errors.phone ? 'border-danger' : ''}`}
+            className={`${fieldClass} h-12 ${errors.phone ? 'border-danger' : ''}`}
           />
           {errors.phone && (
-            <p id="bk-phone-err" className="mt-1.5 text-[14px] text-danger">
+            <p id="bk-phone-err" role="alert" className="mt-1.5 text-[16px] font-medium text-danger">
               {errors.phone}
             </p>
           )}
@@ -136,7 +137,7 @@ export function BookingForm() {
                 setService(id)
                 if (id === 'tai-nha') setMode('tai-nha')
               }}
-              className={`${fieldClass} h-13 appearance-none pr-11`}
+              className={`${fieldClass} h-12 appearance-none pr-11`}
             >
               {booking.serviceOptions.map((o) => (
                 <option key={o.id} value={o.id}>
@@ -161,14 +162,14 @@ export function BookingForm() {
             ).map((o) => (
               <label
                 key={o.v}
-                className={`flex h-13 cursor-pointer items-center justify-center gap-2.5 rounded-xl border text-[16.5px] font-medium transition-colors has-focus-visible:ring-3 has-focus-visible:ring-gold/40 ${
-                  mode === o.v ? 'border-forest bg-forest text-cream' : 'border-wood-soft bg-paper text-ink hover:border-forest'
+                className={`flex h-16 cursor-pointer items-center justify-center gap-3 rounded-[10px] border-2 text-[18px] font-semibold transition-colors duration-200 has-focus-visible:outline-3 has-focus-visible:outline-offset-3 has-focus-visible:outline-forest-deep ${
+                  mode === o.v ? 'border-forest bg-forest text-white' : 'border-wood bg-paper text-ink hover:border-forest'
                 }`}
               >
                 <input type="radio" name="mode" value={o.v} checked={mode === o.v} onChange={() => setMode(o.v)} className="sr-only" />
                 <span
                   aria-hidden
-                  className={`flex size-4.5 items-center justify-center rounded-full border-2 ${mode === o.v ? 'border-gold-light' : 'border-wood-soft'}`}
+                  className={`flex size-5 items-center justify-center rounded-full border-2 ${mode === o.v ? 'border-gold-light' : 'border-wood'}`}
                 >
                   {mode === o.v && <span className="size-2 rounded-full bg-gold-light" />}
                 </span>
@@ -176,13 +177,14 @@ export function BookingForm() {
               </label>
             ))}
           </div>
+          {mode === 'tai-nha' && <p className="mt-2 text-[16px] text-ink-soft">Giá tại nhà chưa bao gồm phí di chuyển.</p>}
         </fieldset>
 
         <div className="sm:col-span-2">
           <label htmlFor="bk-time" className={labelClass}>
             Thời gian mong muốn
           </label>
-          <input id="bk-time" name="time" type="datetime-local" className={`${fieldClass} h-13`} />
+          <input id="bk-time" name="time" type="datetime-local" className={`${fieldClass} h-12`} />
         </div>
 
         <div className="sm:col-span-2">
@@ -199,7 +201,7 @@ export function BookingForm() {
         </div>
       </div>
 
-      <button type="submit" className="btn mt-7 w-full bg-forest text-cream hover:bg-forest-deep">
+      <button type="submit" className="btn mt-7 min-h-14 w-full bg-forest text-[17px] text-white hover:bg-forest-deep">
         {booking.submit}
       </button>
     </form>

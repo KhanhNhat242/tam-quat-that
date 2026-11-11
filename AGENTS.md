@@ -32,6 +32,10 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - Toạ độ bản đồ: `21.0303889, 105.8573478` (theo link Google Maps trong phiếu).
 
 ## 3. Thiết kế
+- **Hệ style hiện hành: `docs/REQUIREMENTS.md` mục 13** (Accessible & Ethical là nền tảng). Tương phản chữ mục tiêu 7:1 – chỉ dùng các cặp màu đã đo trong bảng mục 13.
+- **Vàng đồng (`gold`) không bao giờ làm màu chữ trên nền sáng**; chữ nhấn trên nền tối dùng `gold-light` (#D4B67A); nút vàng dùng chữ `ink`. Không dùng chữ có độ trong suốt (`text-cream/70`…) – dùng token `cream-muted`.
+- Chữ hiển thị **≥ 16px** (ngoại lệ duy nhất: dòng phụ trong cụm logo ở header). Focus dùng viền 3px toàn cục trong `globals.css` – không tự `outline-none`. Phần tử bấm được ≥ 44×44px.
+- Số liệu chưa xác minh hiển thị **tĩnh** – không dùng hiệu ứng đếm số.
 - Bảng màu theo `docs/REQUIREMENTS.md` mục 7: xanh lá trầm – trắng kem – nâu gỗ – điểm nhấn vàng đồng. Khai báo **token màu một lần** trong `app/globals.css` (`@theme`) và dùng qua class Tailwind; **không** dùng mã hex rải rác trong component, **không** thêm màu ngoài bảng (trừ các sắc độ đậm/nhạt của chính các màu đó).
 - Phong cách: Đông y truyền thống + hiện đại, ấm cúng, tinh tế. Tránh: màu neon, gradient sặc sỡ, giao diện "công nghệ", quá nhiều hiệu ứng.
 - Font phải hỗ trợ **tiếng Việt** (`subsets: ["latin", "vietnamese"]` với `next/font`). Kiểm tra dấu hiển thị đúng.
@@ -48,6 +52,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 ## 4. Ảnh & tư liệu
 - Ưu tiên **ảnh thực tế của khách** (Drive trong `docs/REQUIREMENTS.md`). Logo thật thay cho `public/images/temp-logo.png`.
+- Ảnh từ internet **chỉ là ảnh không gian & chất liệu**, **không** ảnh người (kể cả bàn tay đang xoa bóp) – xem `docs/REQUIREMENTS.md` mục 13.
 - Được **bổ sung ảnh từ internet** (theo ghi chú sale) nhưng chỉ dùng nguồn cho phép dùng thương mại (Unsplash, Pexels, Pixabay…); ảnh phải phù hợp không gian tẩm quất/Đông y, **không** chứa logo/thương hiệu khác, **không** có khuôn mặt nhận diện được giả làm nhân viên/khách của tiệm.
 - Ghi nguồn mỗi ảnh lấy từ mạng vào `docs/ASSETS.md` (tên file – nguồn – link – giấy phép).
 - Khi có ảnh thật: chép vào `public/images/photos/` theo đúng tên trong `docs/ASSETS.md`, đổi `src` tương ứng trong `images` của `lib/site-config.ts` (không sửa component).

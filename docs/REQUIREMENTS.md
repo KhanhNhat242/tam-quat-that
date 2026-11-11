@@ -35,12 +35,12 @@
 | Tên trên Google Maps | **Tẩm quất thật (Tẩm quất người khiếm thị)** | Giải mã từ link Maps |
 | Ngành | Spa / Thẩm mỹ / Làm đẹp | |
 | Tỉnh / TP | Hà Nội | |
-| Người liên hệ | _(thiếu)_ | |
-| SĐT / Zalo (bắt buộc) | _(thiếu)_ | **Bắt buộc** – chờ sale bổ sung |
+| Người liên hệ | **Ngọc** (hotline đặt lịch) | Nội dung khách cung cấp 11/11/2026 |
+| SĐT / Zalo (bắt buộc) | **0989.588.030** (hotline đặt lịch) | Zalo chưa xác nhận |
 | Facebook Page | _(thiếu)_ | |
 | Website hiện tại | _(không có)_ | |
 | Khách đồng ý xem demo? (bắt buộc) | _(chưa điền)_ | |
-| Địa chỉ chi tiết | _(không có trong phiếu)_ | **Không tự bịa** – lấy từ Google Maps/khách |
+| Địa chỉ chi tiết | **711 Hồng Hà (gần Chương Dương Độ), Q. Hoàn Kiếm, Hà Nội** | Khách cung cấp 11/11/2026 |
 | Giờ mở cửa | _(không có trong phiếu)_ | Có thể nằm trong tư liệu Drive |
 
 ### Google Maps
@@ -72,7 +72,15 @@
 | 2 | **Cạo gió – giác hơi** | |
 | 3 | **Tẩm quất tại nhà theo yêu cầu** | Phục vụ khách có nhu cầu tại nhà |
 
-- **Giá:** phiếu ghi khách đã có "bảng giá" nhưng **không ghi giá cụ thể** → lấy từ tư liệu Drive / sale. Khi chưa có: hiển thị "Liên hệ" hoặc giá mẫu được đánh dấu rõ trong code là placeholder (xem `RULES`). **Không tự bịa giá như thật.**
+- **Giá (khách cung cấp 11/11/2026):**
+
+| Dịch vụ | Giá |
+|---|---|
+| Tẩm quất – Bấm huyệt Đông y | 150.000đ / 60 phút · 225.000đ / 90 phút · 300.000đ / 120 phút |
+| Cạo gió – Giác hơi bài phong hàn | 40.000đ / lượt |
+| Tẩm quất tại nhà (theo yêu cầu) | 200.000đ / 60 phút (chưa gồm phí di chuyển) |
+
+- **Thương hiệu đầy đủ:** "Tẩm Quất Thật – 711 Hồng Hà". **Slogan:** "Chạm đúng điểm đau – Cảm nhận sự chữa lành". **Khẩu hiệu phụ:** "15 năm chắc tay nghề – Trọn vẹn tâm y".
 
 ---
 
@@ -160,13 +168,13 @@ Ngoài phạm vi (KHÔNG làm nếu chưa có yêu cầu mới): giỏ hàng, th
 **Lưu ý từ sale:** *"ảnh lấy thêm trên mạng nhe"* → ảnh thực tế của khách là **ưu tiên số 1**; được phép **bổ sung ảnh từ internet** khi thiếu, với điều kiện ở mục quy tắc ảnh trong `AGENTS.md`.
 
 **Còn thiếu – phiếu có nhắc "SALE BỔ SUNG HỒ SƠ":**
-- [ ] SĐT / Zalo (bắt buộc)
-- [ ] Người liên hệ
+- [x] SĐT: 0989.588.030 (Zalo chưa xác nhận)
+- [x] Người liên hệ: Ngọc
 - [ ] Khách đồng ý xem demo? (bắt buộc)
 - [ ] Link Facebook Page
 - [ ] Xác nhận dùng Zalo / Messenger + link
-- [ ] Địa chỉ chi tiết, giờ mở cửa
-- [ ] Giá cụ thể từng gói (nếu không có trong Drive)
+- [x] Địa chỉ: 711 Hồng Hà · [ ] Giờ mở cửa
+- [x] Giá cụ thể từng gói
 - [ ] Xác minh số liệu USP (mục 6)
 - [ ] Hạn giao demo, mức ưu tiên
 
@@ -194,6 +202,25 @@ Trong lúc chờ: dùng placeholder tập trung tại một file cấu hình, **
 | 10/11/2026 | — | Khởi tạo tài liệu từ Phiếu Dev 58 | — |
 | 10/11/2026 | Dev | Triển khai landing page theo brief thiết kế "Warm Oriental Wellness" (mục 12) | Toàn trang |
 | 10/11/2026 | Người dùng | Thay toàn bộ ảnh minh hoạ tạm bằng ảnh thật trong `public/images` | Mọi section có ảnh |
+| 11/11/2026 | Người dùng | Áp dụng hệ style mục 13 (Accessible & Ethical, Nature Distilled, Academia chọn lọc, Storytelling); USP còn 3 số liệu tĩnh; giá ghi "Liên hệ"; gỡ ảnh người lấy từ mạng | Toàn trang |
+| 11/11/2026 | Người dùng | Cập nhật nội dung theo bài giới thiệu của cơ sở (mục 14): hotline, địa chỉ, bảng giá, slogan, lý do chọn | Toàn bộ text |
+| 11/11/2026 | Người dùng | Hero đổi bố cục theo ảnh mẫu (chữ trái, ảnh lớn tràn phải với cạnh cong); ảnh phải = `public/images/hero-img.jpg` do người dùng chỉ định – **ngoại lệ** của quy tắc "không ảnh người từ mạng" (mục 13), cần xác minh giấy phép & cân nhắc thay ảnh thật | Hero |
+| 11/11/2026 | Người dùng | Header mobile: mở menu → khoá cuộn trang (mở khoá khi đóng / Esc / chọn mục / chuyển sang desktop) | Header |
+| 11/11/2026 | Người dùng | Dịch vụ: rút ngắn quãng cuộn của scroller (bước 420px, sân khấu 540px) → section thấp hơn trên desktop | Dịch vụ |
+| 11/11/2026 | Người dùng | Hero trên desktop cao theo màn hình nhưng giới hạn 720–900px (màn lớn không còn kéo Hero cao theo) | Hero |
+| 11/11/2026 | Người dùng | Hero: ảnh phải đổi sang `hero3-img.webp` (bản nét hơn cùng cảnh), phóng 2× Lanczos + làm nét, quality 90, `sizes=100vw` để không bị phóng mờ | Hero |
+| 11/11/2026 | Người dùng | Hero: ảnh phải đổi sang `hero2-img.jpg` (trùng library/ed787bbf → ô Thư viện đổi sang ảnh mặt tiền ban ngày để không lặp). Đáy Hero cắt theo đường cong (mask), Giới thiệu kéo lên dưới đường cong → bỏ dải kem thừa giữa 2 section | Hero, Giới thiệu, Thư viện |
+| 11/11/2026 | Người dùng | Giới thiệu: đổi ảnh bên trái sang `public/images/about-img.png` (→ `photos/about-img.webp`) | Giới thiệu |
+| 11/11/2026 | Người dùng | Giới thiệu (lần 3): bố cục theo ảnh mẫu – ảnh lớn tràn mép trái hoà dần sang nền kem bằng gradient, nội dung bên phải (nhãn, tiêu đề 2 độ đậm, đoạn văn, dòng thông tin, nút, hộp hotline bo tròn) | Giới thiệu |
+| 11/11/2026 | Người dùng | Không lặp ảnh giữa các section: mỗi ảnh chỉ dùng 1 lần; bổ sung ảnh từ `public/images/library` (người dùng chỉ định – ngoại lệ mục 13, chỉ ảnh không lộ mặt kỹ thuật viên); thẻ thông tin khu Đặt lịch dùng logo thay ảnh mặt tiền | Mọi section có ảnh |
+| 11/11/2026 | Người dùng | Giới thiệu (lần 2): bố cục theo ảnh mẫu spa – trái: đoạn dẫn + ảnh khung viên thuốc (pill) trên nền vệt cọ màu nước, lá thuốc, huy hiệu tròn; phải: logo, tiêu đề lớn căn giữa, dòng nhấn trên vệt cọ, đoạn văn, địa chỉ góc dưới | Giới thiệu |
+| 11/11/2026 | Người dùng | Bảng giá – 2 dịch vụ lẻ thành ô ảnh accordion ngang (ServicePanel): mặc định giá + tiêu đề trên ảnh; hover/focus → ô giãn & hiện chi tiết; thiết bị không hover → luôn hiện chi tiết | Bảng giá |
+| 11/11/2026 | Người dùng | Tiêu đề Hero dùng hiệu ứng WarpText (React Bits, thư viện `ogl` – WebGL): chữ uốn cong theo chuột, gợn sóng khi nhấn; giữ thẻ `<h1>` chữ thật cho trình đọc màn hình/SEO; giảm chuyển động → chữ đứng yên | Hero |
+| 11/11/2026 | Người dùng | Hero cao đúng 1 màn hình; header cố định: trong phạm vi Hero nền trùng màu Hero, nav dồn trái, ẩn nút "Gọi ngay" (nút gọi nổi vẫn luôn hiện); cuộn qua Hero → nền kem, nav ra giữa, hiện nút | Header, Hero |
+| 11/11/2026 | Người dùng | Dịch vụ: "scroller" chồng thẻ 3D chạy theo cuộn (sticky) trên desktop, theo code mẫu người dùng gửi; mobile / giảm chuyển động / SSR = danh sách tĩnh đầy đủ. Ngoại lệ: chuyển động gắn với cuộn | Dịch vụ |
+| 11/11/2026 | Người dùng | Giới thiệu: bố cục theo ảnh mẫu – cụm ảnh tròn (1 lớn tràn mép trái + 1 nhỏ chồng góc dưới), tiêu đề serif viết hoa 2 dòng bên phải; giữ nền kem | Giới thiệu |
+| 11/11/2026 | Người dùng | Testimonials: 3 card trên 1 hàng theo ảnh mẫu (avatar trong góc khuyết, ngoặc kép lớn, khung lệch phía sau) + hiệu ứng nổi bồng bềnh như trên mặt nước (tắt khi giảm chuyển động). Không có sao & tên người (nội dung mẫu – AGENTS.md mục 1) | Phản hồi |
+| 11/11/2026 | Người dùng | 3 thẻ giá 60/90/120 phút dùng hiệu ứng lật (FlipCard – React Bits, thư viện `motion`): mặt trước ảnh minh hoạ + tiêu đề đè lên ảnh, nhấn để lật xem chi tiết | Bảng giá |
 
 ---
 
@@ -239,3 +266,59 @@ Trong lúc chờ: dùng placeholder tập trung tại một file cấu hình, **
 - "Phổ biến nhất" (gói 90 phút), "100% Tận tâm", nội dung đào tạo KTV: giữ theo brief nhưng gắn `TODO(SALE)` cần xác nhận.
 
 **Ảnh:** đã thay toàn bộ ảnh minh hoạ tạm bằng ảnh thật trong `public/images/photos/` (danh mục, nguồn và ảnh bị loại: `docs/ASSETS.md`).
+
+---
+
+## 13. Hệ style áp dụng (11/11/2026) – thay thế các điểm trái ngược ở mục 12
+
+| Style | Lấy gì | Bỏ gì |
+|---|---|---|
+| **Accessible & Ethical** (nền tảng bắt buộc) | Tương phản mục tiêu **7:1**; chữ **≥ 16px**; viền focus **3–4px**; vùng bấm **≥ 44×44px**; skip link; thân thiện trình đọc màn hình; giọng văn đặt tay nghề lên trước | — |
+| **Nature Distilled** | Ấm, gỗ, chất liệu hữu cơ, bóng mềm, easing ease-out | Terracotta, cam đất, lớp grain đè lên ảnh |
+| **Academia** (chọn lọc) | Khung ảnh **vòm**; CTA **đồng thau**; **drop cap serif** cho bài giới thiệu | Nền gỗ gụ tối, vignette nặng, ảnh sepia, đỏ crimson, font Cinzel |
+| **Storytelling-Driven** | Tiêu đề serif; **hiện dần khi cuộn 600ms**; khoảng cách lớn giữa các khu | Parallax |
+| Organic Biophilic (hoạ tiết) | Đường SVG lá thuốc & mây ở viền khu vực, độ mờ thấp | Xanh trời, xanh rừng tươi, bo góc 24px khắp nơi |
+| Hero-Centric + Conversion | Chữ hero đặt trên **nền màu đặc**; CTA "Gọi ngay" lớn; ô nhập form cao **48px**; "Tại cơ sở / Tại nhà" là 2 ô lớn | Chữ phủ lên ảnh |
+| Social Proof (USP) | Khối số liệu **tĩnh**: 15 năm · 10+ nhân viên · 80–100 khách/ngày | **Không** hiệu ứng đếm số (số chưa xác minh; trình đọc màn hình đọc sai) |
+| Bảng giá (cập nhật 11/11) | **Thẻ lật** (FlipCard): mặt trước = ảnh minh hoạ + tiêu đề trên dải nền màu đặc (giữ tương phản); nhấn / Enter / Space để lật xem chi tiết; nút "Đặt gói này" đặt **ngoài** thẻ; giảm chuyển động → đổi mặt bằng mờ dần; chưa có giá → "**Liên hệ**" | Nút bấm lồng trong thẻ lật, tắt viền focus |
+
+### Quy tắc màu chữ (đã đo tương phản)
+
+| Cặp màu | Tỉ lệ | Dùng |
+|---|---|---|
+| Ink `#2B2620` trên kem | 13.56:1 | Chữ chính |
+| Ink-soft `#4A4239` trên kem / kem gỗ | 8.92 / 8.04:1 | Chữ phụ |
+| Wood-deep `#5A3D26` trên kem / kem gỗ | 8.91 / 8.03:1 | Nhãn mục (eyebrow), giá |
+| Kem trên xanh trầm / xanh đậm | 8.78 / 12.15:1 | Chữ trên nền tối |
+| Cream-muted `#ECE4D6` trên xanh trầm | 7.70:1 | Chữ phụ trên nền tối (thay cho chữ kem mờ) |
+| Vàng sáng `#D4B67A` trên xanh đậm | 6.89:1 | Chữ nhấn trên nền tối (tiêu đề, số lớn) |
+| Ink trên nút đồng thau `#D4B67A` | 7.69:1 | CTA đồng thau (hero, gói nổi bật) |
+| Trắng trên xanh trầm | 9.72:1 | Nút "Gọi ngay" trên nền sáng |
+| ~~Vàng đồng `#B08D57` trên kem~~ | 2.80:1 ✗ | **Chỉ** dùng cho đường kẻ, icon, hoạ tiết – không làm màu chữ |
+
+### Ảnh
+- Ảnh lấy từ mạng **chỉ** là ảnh không gian & chất liệu (lá thuốc, đá nóng, khăn, phòng trị liệu, dụng cụ). **Không** dùng ảnh người từ mạng (kể cả cận cảnh bàn tay đang xoa bóp), vì khách sẽ hiểu đó là kỹ thuật viên thật của cơ sở.
+- Ảnh người chỉ dùng khi là **ảnh thật của cơ sở** do khách cung cấp và đã đồng ý.
+- Khu Dịch vụ & thẻ giá trị USP dùng **icon nét** trong khung vòm thay cho ảnh.
+
+---
+
+## 14. Nội dung từ bài giới thiệu của cơ sở (11/11/2026) & điều chỉnh theo quy tắc
+
+Nguồn: bài giới thiệu "KHI THỊ GIÁC KHÉP LẠI, ĐÔI TAY TRỞ THÀNH NHỊP CẦU NĂNG LƯỢNG CHỮA LÀNH" người dùng gửi.
+
+**Dùng nguyên văn / gần nguyên văn:** slogan, khẩu hiệu "15 năm chắc tay nghề – Trọn vẹn tâm y", bảng giá, hotline (Ngọc), địa chỉ, "80–100 lượt khách mỗi ngày", "trên 10 nhân viên", "100% kỹ thuật viên khiếm thị (Nam/Nữ)", đoạn mở đầu về nhịp sống đô thị & xúc giác tôi luyện qua năm tháng.
+
+**Viết lại để tuân thủ AGENTS.md mục 1 & REQUIREMENTS mục 13** (người dùng có thể yêu cầu dùng nguyên văn):
+
+| Câu gốc | Đã đổi thành | Lý do |
+|---|---|---|
+| "chữa đúng bệnh, phục hồi sâu từ gốc" | "chạm đúng điểm đau, đặt lực ấn chuẩn xác" | Tuyên bố điều trị bệnh |
+| "Giải tỏa đau nhức xương khớp" | "giúp giảm cảm giác đau mỏi cơ, xương khớp" | Tuyên bố điều trị |
+| "Đánh bay tà khí, thanh lọc cơ thể" | "làm ấm cơ thể, giải cảm, lưu thông khí huyết" | Tuyên bố sức khoẻ khó kiểm chứng |
+| "Nhiều năm sống trong bóng tối đã ban tặng… đôi bàn tay đầy thấu cảm" | "Kỹ năng xúc giác được tôi luyện qua năm tháng giúp các kỹ thuật viên khiếm thị…" | Lối kể khơi lòng thương – đặt tay nghề lên trước |
+| Tiêu đề "Khi thị giác khép lại, đôi tay trở thành nhịp cầu năng lượng chữa lành" | "Đôi tay thấu cảm, chạm đúng điểm đau" | Như trên |
+
+**Cần xác minh trước khi công bố chính thức (`verified: false`, `TODO(SALE)`):** chứng chỉ hành nghề YHCT của kỹ thuật viên, 15 năm, trên 10 nhân viên, 80–100 khách/ngày, 100% KTV khiếm thị.
+
+**Ghi nhận:** biển hiệu/xe "711 Hồng Hà – Trạm bảo dưỡng cơ thể" trong thư mục ảnh có thể là của chính cơ sở → chờ sale xác nhận trước khi dùng.

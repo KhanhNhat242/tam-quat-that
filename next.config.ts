@@ -6,6 +6,10 @@ const nextConfig: NextConfig = {
     agentFeedback: true,
     agentUpgrade: "security",
   },
+  /** 75 = mặc định; 90 = riêng ảnh Hero cần nét tối đa (Next 16 bắt buộc khai báo danh sách qualities) */
+  images: {
+    qualities: [75, 90],
+  },
   cacheComponents: true,
   partialPrefetching: true,
   turbopack: {
